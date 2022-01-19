@@ -33,11 +33,10 @@ export class ArcaptchaAngularComponent implements OnInit {
 
 
   loadCaptcha() {
-    console.log(this.callback)
     if (this.callback)
       (window as { [key: string]: any })['arcaptcha_callback_' + this.id] = this.callback
 
-    const widgetId = window.arcaptcha.render('#' + this.id, {
+    const widgetId = (window as any).arcaptcha.render('#' + this.id, {
       "site-key": this.site_key,
       lang: this.lang,
       theme: this.theme,
@@ -61,11 +60,11 @@ export class ArcaptchaAngularComponent implements OnInit {
   }
 
   resetCaptcha() {
-    window.arcaptcha.reset(this.widget_id);
+    (window as any).arcaptcha.reset(this.widget_id);
   }
 
   execute() {
-    window.arcaptcha.execute(this.widget_id);
+    (window as any).arcaptcha.execute(this.widget_id);
   }
 
 }
