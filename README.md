@@ -1,27 +1,61 @@
-# ArcaptchaAngular
+# Angular Arcaptcha Component Library
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.3.
+## Description
+Arcaptcha Component Library for AngularJS.
 
-## Development server
+[Arcaptcha](https://arcaptcha.ir/) is a drop-replacement for reCAPTCHA and hCaptcha that protects user privacy, rewards websites, and helps companies get their data labeled.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Sign up at [Arcaptcha](https://arcaptcha.ir/sign-up) to get your sitekey today. You need a **sitekey** to use this library.
 
-## Code scaffolding
+## Installation
+You can install this library via npm with:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```
+  npm i arcaptcha-angular 
+```
 
-## Build
+## Usage
+The requirement for usage are the sitekey prop. The component will automatically include and load the Arcaptcha  API library and append it to the body.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```
+import {ArcaptchaWidget}  from 'arcaptcha-react'
 
-## Running unit tests
+class YOUR_COMPONENT_NAME extends Component{
+  constructor(){
+    super();
+    this.ArRef = React.createRef();
+  }
+  setChallenge = (challengeId)=>{
+    //do something with your challenge ID.
+  }
+  render() {
+    return (
+      <div>
+          <WidgetWrapper
+              ref={this.ArRef}
+              site-key="YOUR_SITE_KEY"
+              onsetChallengeId={this.setChallenge}
+              />
+      </div>
+    );
+  }
+}
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Props
 
-## Running end-to-end tests
+| Name | Values/Type | Required	| Default	 | Description |
+|--------|--------|--------|--------|--------|
+|    sitekey    |    string   |    Yes   |    -   |    This is your sitekey, this allows you to load captcha. If you need a sitekey, please visit [Arcaptcha](https://arcaptcha.ir/sign-up), and sign up to get your sitekey   |
+|    invisible    |    Boolean    |  NO  |  False | This allows you to use invisible captcha for you forms |
+|    callback    |    Function    |  NO  |  null  | This function would be called in invisible captcha after solving captcha |  
+|    lang    |    string    |  NO  |  persion  | This allows you to choose language by this prop. you can choose 'en' or 'fa' for english and persion language | 
+|    theme    |    string    |  NO  |  light  | This allows you to choose theme for your widget. The themes are light and dark  | 
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
+## Methods
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+| Method | Description |
+|--------|--------|
+|    execute    |    Programmatically trigger a challenge request. You can use this, to load invisible captcha after trigger a button  |
+|    resetCaptcha    |    	Reset the current challenge    |
