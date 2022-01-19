@@ -2,6 +2,12 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "paths": {
+      "arcaptcha-angular": [
+        "dist/arcaptcha-angular/arcaptcha-angular",
+        "dist/arcaptcha-angular"
+      ]
+    },
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
