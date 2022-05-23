@@ -21,16 +21,29 @@ export class ArcaptchaAngularComponent implements OnInit {
 
   ngOnInit(): void {
     this.setID()
+    var my_script = document.head.querySelector("#arcptcha-script");
     const script = document.createElement("script");
     script.src = `https://widget.arcaptcha.ir/1/api.js`;
-    script.onload = () => {
-      this.loadCaptcha();
-      window.addEventListener('arcaptcha-token-changed-' + this.widget_id,
-        event => { this.onsetChallengeId.emit((<any>event).detail) })
+    script.id = "arcptcha-script";
+    if (my_script) {
+      setTimeout(()=>{
+        this.initialize();
+      },300)
+      
     }
-    document.body.appendChild(script);
+    else {
+      script.onload = () => {
+        this.initialize();
+      };
+    }
+    if (!my_script) document.head.appendChild(script);
   }
 
+  initialize() {
+    this.loadCaptcha();
+    window.addEventListener('arcaptcha-token-changed-' + this.widget_id,
+    event => { this.onsetChallengeId.emit((<any>event).detail) })
+  }
 
   loadCaptcha() {
     if (this.callback)
