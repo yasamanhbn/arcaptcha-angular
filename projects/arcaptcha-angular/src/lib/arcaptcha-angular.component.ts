@@ -1,9 +1,16 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 
+declare global {
+  interface Window {
+    arcaptchaWidgetLoading: any; // 👈️ turn off type checking
+  }
+}
+
 @Component({
   selector: 'lib-arcaptcha-angular',
   template: '<div id={{id}} href="arcaptcha"></div>',
 })
+
 export class ArcaptchaAngularComponent implements OnInit {
   constructor() { }
 
@@ -21,28 +28,33 @@ export class ArcaptchaAngularComponent implements OnInit {
 
   ngOnInit(): void {
     this.setID()
-    var my_script = document.head.querySelector("#arcptcha-script");
-    const script = document.createElement("script");
-    script.src = ` https://widget.arcaptcha.co/2/api.js`;
-    script.id = "arcptcha-script";
+    var my_script = document.head.querySelector("#arcptcha-script") as HTMLImageElement | null;;
+    const script = my_script || document.createElement("script") ;
+
+    if (!my_script) {
+      window.arcaptchaWidgetLoading = new Promise<void>((resolve, reject) => {
+        script.src = `https://widget.arcaptcha.co/2/api.js`;
+        script.id = "arcptcha-script";
+        script.onload = () => {
+          resolve();
+          this.initialize();
+        };
+      });
+    }
     if (my_script) {
-      setTimeout(()=>{
+      window.arcaptchaWidgetLoading.then(() => {
         this.initialize();
-      },300)
-      
+      });
     }
-    else {
-      script.onload = () => {
-        this.initialize();
-      };
+    if (!my_script) {
+      document.head.appendChild(script);
     }
-    if (!my_script) document.head.appendChild(script);
   }
 
   initialize() {
     this.loadCaptcha();
     window.addEventListener('arcaptcha-token-changed-' + this.widget_id,
-    event => { this.onsetChallengeId.emit((<any>event).detail) })
+    event => { /* this.onsetChallengeId.emit((<any>event).detail)  */})
   }
 
   loadCaptcha() {

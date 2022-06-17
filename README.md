@@ -53,7 +53,6 @@ export class AppComponent {
 <lib-arcaptcha-angular 
     #widget 
     [site_key]="YOUR_SITE_KEY" 
-    (onsetChallengeId)="ChallengeIdHandler($event)"
     [callback]=callbackFunction //for invisible captcha
     [invisible]=true   //default is false
     [lang]="'en'"    //optional, default is persion
