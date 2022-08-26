@@ -15,7 +15,7 @@ You can install this library via npm with:
 ```
 
 ## Usage
-The requirement for usage are the sitekey prop. The component will automatically include and load the Arcaptcha  API library and append it to the body.
+The requirement for usage are the siteـkey prop. The component will automatically include and load the Arcaptcha  API library and append it to the body.
 
 ```
 /// X.component.ts
