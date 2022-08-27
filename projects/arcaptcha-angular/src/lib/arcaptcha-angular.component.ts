@@ -19,6 +19,7 @@ export class ArcaptchaAngularComponent implements OnInit {
   @Input() lang = 'fa';
   @Input() theme = 'light'
   @Input() invisible = false
+  @Input() color = 'normal'
 
   @Output() onsetChallengeId: EventEmitter<number> = new EventEmitter();
 
@@ -69,6 +70,7 @@ export class ArcaptchaAngularComponent implements OnInit {
       callback: this.invisible
         ? 'arcaptcha_callback_' + this.id
         : null,
+      color:this.color
     })
     this.widget_id = widgetId
   }
